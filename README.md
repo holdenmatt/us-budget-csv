@@ -5,10 +5,8 @@ A Python script that extracts historical US federal budget data from Congression
 **Important**: We deliberately avoid any calculations or transformations here.
 All values are extracted directly from CBO's published data.
 
-You can audit the extraction script [here](https://github.com/holdenmatt/us-budget-csv/blob/main/scripts/extract_budget_data.py).
-
-The only changes made during extraction are:
-- Converting surplus numbers to deficit (multiplying by -1) for more intuitive interpretation
+You can audit the extraction script [here](https://github.com/holdenmatt/us-budget-csv/blob/main/scripts/extract_budget_data.py). The only changes made during extraction are:
+- Converting surplus values to deficit (multiplying by -1) for more intuitive interpretation
 - Very minor column renames and reordering for readability
 
 ## Output
