@@ -1,4 +1,4 @@
-# US Federal Budget Deficit CSV extractor
+# US Historical Federal Budget Data CSV extractor
 
 A simple Python script to extract historical US federal budget data from
 Congressional Budget Office (CBO) Excel files into CSV format.
