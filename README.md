@@ -1,7 +1,24 @@
 # US Historical Federal Budget Data CSV extractor
 
-A simple Python script to extract historical US federal budget data from
-Congressional Budget Office (CBO) Excel files into CSV format.
+A Python script that extracts historical US federal budget data from Congressional Budget Office (CBO) Excel workbooks into CSV format.
+
+**Important**: We deliberately avoid any calculations or transformations here.
+All values are extracted directly from CBO's published data.
+
+You can audit the extraction script [here](https://github.com/holdenmatt/us-budget-csv/blob/main/scripts/extract_budget_data.py).
+
+The only changes made during extraction are:
+- Converting surplus numbers to deficit (multiplying by -1) for more intuitive interpretation
+- Very minor column renames and reordering for readability
+
+## Output
+
+The script extracts CBO data into two CSV files:
+- `budget_gdp.csv`: Budget values as a percentage of gross domestic product (GDP)
+- `budget_nominal.csv`: Raw nominal budget values in billions of dollars (not adjusted for inflation)
+
+GDP percentages are generally more meaningful for analysis since they show spending, revenue,
+and deficits relative to the size of the economy (which is what matters).
 
 ## Requirements
 
@@ -44,7 +61,3 @@ pip install -r requirements.txt
 ```bash
 python scripts/extract_budget_data.py
 ```
-
-The script will generate two CSV files in the `output/` directory:
-- `budget_gdp.csv`: Budget values as a percentage of gross domestic product (GDP)
-- `budget_nominal.csv`: Raw budget values in billions of dollars

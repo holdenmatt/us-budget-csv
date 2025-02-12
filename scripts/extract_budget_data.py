@@ -48,7 +48,7 @@ def read_sheet_pair(
     # For GDP sheet, rename columns
     gdp_rename_dict = {'Unnamed: 0': 'Year'}
     for col in columns:
-        new_name = rename_dict.get(col, col)  # Use renamed column if available
+        new_name = rename_dict.get(col, col) # Use renamed column if available
         gdp_rename_dict[col] = new_name
         
     df_gdp = df_gdp.rename(columns=gdp_rename_dict)
