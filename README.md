@@ -12,19 +12,23 @@ Congressional Budget Office (CBO) Excel files into CSV format.
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/holdenmatt/us-deficit-csv.git
-cd us-deficit-csv
+git clone https://github.com/holdenmatt/us-budget-csv.git
+cd us-budget-csv
 ```
 
 2. Create a Python virtual environment:
 ```bash
 python -m venv venv
+```
+
+3. Activate it:
+```bash
 source venv/bin/activate  # On Unix/macOS
 # or
 .\venv\Scripts\activate  # On Windows
 ```
 
-3. Install:
+4. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
