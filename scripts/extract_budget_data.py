@@ -3,7 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 from typing import Tuple
-from config import SHEET_CONFIGS, XLS_FILENAME
+from config import SHEET_CONFIGS, XLS_FILENAME, COLUMN_ORDER
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 input_dir = os.path.abspath(os.path.join(script_dir, "..", "input"))
@@ -36,7 +36,7 @@ def read_sheet_pair(
     df_nominal = df_nominal[cols_to_keep]
     
     # Handle renaming
-    rename_dict = {'Unnamed: 0': 'year'}
+    rename_dict = {'Unnamed: 0': 'Year'}
     if rename_map:
         rename_dict.update(rename_map)
     df_nominal = df_nominal.rename(columns=rename_dict)
@@ -46,7 +46,7 @@ def read_sheet_pair(
     df_gdp = df_gdp[cols_to_keep]
     
     # For GDP sheet, rename columns
-    gdp_rename_dict = {'Unnamed: 0': 'year'}
+    gdp_rename_dict = {'Unnamed: 0': 'Year'}
     for col in columns:
         new_name = rename_dict.get(col, col)  # Use renamed column if available
         gdp_rename_dict[col] = new_name
@@ -70,22 +70,26 @@ def extract_budget_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
     
     # Combine all nominal dataframes
     combined_nominal = nominal_dfs[0]
-    combined_nominal = combined_nominal[pd.to_numeric(combined_nominal['year'], errors='coerce').notna()].copy()
-    combined_nominal['year'] = pd.to_numeric(combined_nominal['year'])
-    
+    combined_nominal = combined_nominal[pd.to_numeric(combined_nominal['Year'], errors='coerce').notna()].copy()
+    combined_nominal['Year'] = pd.to_numeric(combined_nominal['Year'])
+
     # Combine all GDP dataframes
     combined_gdp = gdp_dfs[0]
-    combined_gdp = combined_gdp[pd.to_numeric(combined_gdp['year'], errors='coerce').notna()].copy()
-    combined_gdp['year'] = pd.to_numeric(combined_gdp['year'])
+    combined_gdp = combined_gdp[pd.to_numeric(combined_gdp['Year'], errors='coerce').notna()].copy()
+    combined_gdp['Year'] = pd.to_numeric(combined_gdp['Year'])
     
     # Merge in the rest
     for nominal_df, gdp_df in zip(nominal_dfs[1:], gdp_dfs[1:]):
-        combined_nominal = pd.merge(combined_nominal, nominal_df, on='year', how='inner')
-        combined_gdp = pd.merge(combined_gdp, gdp_df, on='year', how='inner')
+        combined_nominal = pd.merge(combined_nominal, nominal_df, on='Year', how='inner')
+        combined_gdp = pd.merge(combined_gdp, gdp_df, on='Year', how='inner')
 
     # Convert surplus to deficit (more intuitive)
-    combined_nominal = combined_nominal.assign(Deficit = -combined_nominal['Surplus']).drop('Surplus', axis=1)
-    combined_gdp = combined_gdp.assign(Deficit = -combined_gdp['Surplus']).drop('Surplus', axis=1)
+    combined_nominal['Deficit'] = -combined_nominal['Surplus']
+    combined_gdp['Deficit'] = -combined_gdp['Surplus']
+
+    # Reorder columns
+    combined_nominal = combined_nominal[COLUMN_ORDER]
+    combined_gdp = combined_gdp[COLUMN_ORDER]
 
     return combined_nominal, combined_gdp
 

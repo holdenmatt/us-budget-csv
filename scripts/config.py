@@ -64,3 +64,24 @@ SHEET_CONFIGS: dict[str, SheetConfig] = {
         "skip_rows": 7
     }
 }
+
+# Reorder final columns to be more intuitive
+COLUMN_ORDER = [
+    'Year',
+    'Deficit',
+    'Total Revenue',
+    'Total Spending',
+
+    # Spending categories
+    'Net interest',
+    'Defense',
+    'Non-defense discretionary',
+    'Social Security',
+    'Medicare', 
+    'Medicaid',
+    'Income security',
+    'Federal civilian and military retirement',
+    'Veterans programs',
+    'Other programs',
+    'Offsetting receipts'
+]
